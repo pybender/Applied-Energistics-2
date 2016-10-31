@@ -22,7 +22,6 @@ package appeng.core;
 import java.io.File;
 import java.util.HashSet;
 import java.util.Set;
-
 import javax.annotation.Nonnull;
 
 import com.google.common.base.Preconditions;
@@ -65,6 +64,8 @@ import appeng.core.localization.GuiText;
 import appeng.core.localization.PlayerMessages;
 import appeng.core.stats.PlayerStatsRegistration;
 import appeng.hooks.TickHandler;
+import appeng.integration.IntegrationRegistry;
+import appeng.integration.IntegrationType;
 import appeng.items.materials.ItemMaterial;
 import appeng.items.parts.ItemFacade;
 import appeng.loot.ChestLoot;
@@ -248,13 +249,11 @@ public final class Registration
 		final Runnable recipeLoader = new RecipeLoader( recipeDirectory, customRecipeConfig, this.recipeHandler );
 		recipeLoader.run();
 
-		// TODO readd layers
-
-		// if( IntegrationRegistry.INSTANCE.isEnabled( IntegrationType.IC2 ) )
-		// {
-		// partHelper.registerNewLayer( "appeng.parts.layers.LayerIEnergySink", "ic2.api.energy.tile.IEnergySink" );
-		// partHelper.registerNewLayer( "appeng.parts.layers.LayerIEnergySource", "ic2.api.energy.tile.IEnergySource" );
-		// }
+		if( IntegrationRegistry.INSTANCE.isEnabled( IntegrationType.IC2 ) )
+		{
+			partHelper.registerNewLayer( "appeng.parts.layers.LayerIEnergySink", "ic2.api.energy.tile.IEnergySink" );
+			partHelper.registerNewLayer( "appeng.parts.layers.LayerIEnergySource", "ic2.api.energy.tile.IEnergySource" );
+		}
 		//
 		// if( IntegrationRegistry.INSTANCE.isEnabled( IntegrationType.RF ) )
 		// {
